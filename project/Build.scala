@@ -10,7 +10,8 @@ object ProjectBuild extends Build {
       organization := "com.tresata",
       name := "spark-wordtophrase",
       version := "0.1.0-SNAPSHOT",
-      scalaVersion := "2.11.8",
+      scalaVersion := "2.11.7",
+      crossScalaVersions := Seq("2.10.5", "2.11.7"),
       libraryDependencies ++= Seq(
         "com.twitter" %% "algebird-core" % "0.12.0" % "compile",
         "org.apache.spark" %% "spark-sql" % "1.6.2" % "provided",
