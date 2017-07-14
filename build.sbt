@@ -6,7 +6,7 @@ lazy val root = (project in file(".")).settings(
   crossScalaVersions := Seq("2.10.6", "2.11.8"),
   libraryDependencies ++= Seq(
     "com.twitter" %% "algebird-core" % "0.12.3" % "compile",
-    "org.apache.spark" %% "spark-sql" % "2.1.0" % "provided",
+    "org.apache.spark" %% "spark-sql" % "2.2.0" % "provided",
     "org.scalatest" %% "scalatest" % "3.0.3" % "test"
   ),
   publishMavenStyle := true,
