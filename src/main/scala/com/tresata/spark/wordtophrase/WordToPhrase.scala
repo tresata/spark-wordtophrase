@@ -39,7 +39,7 @@ object WordToPhrase {
   }
 
   /* Score each phrase and join the high scoring one's */
- def calculateScore(token: Tokenize, cms: Broadcast[CMS[String]], params: ScoreParams): String => String = { s =>
+  def calculateScore(token: Tokenize, cms: Broadcast[CMS[String]], params: ScoreParams): String => String = { s =>
     new Iterator[String] {
       val buff = token(s).toIterator.buffered
       override def hasNext: Boolean = buff.hasNext
@@ -47,7 +47,7 @@ object WordToPhrase {
         val x  = buff.next()
         if (buff.hasNext) {
           val head = buff.head
-          val score = 1.0 * cms.value.frequency(s"${x} ${head}").estimate - params.delta / cms.value.frequency(x).estimate * cms.value.frequency(head).estimate
+          val score = (cms.value.frequency(s"${x} ${head}").estimate - params.delta) / (cms.value.frequency(x).estimate * cms.value.frequency(head).estimate)
           if (score >= params.threshold) {
             buff.next() // want to skip 'head' since it was already combined
             s"${x}_${head}"

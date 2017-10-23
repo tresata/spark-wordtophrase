@@ -6,7 +6,7 @@ import org.apache.spark.storage.StorageLevel
 
 class WordToPhraseSpec extends FunSpec {
   import WordToPhrase._
-  import SparkSuite.{ sc, sqlc }
+  import SparkSuite.{sc, sqlc}
   import sqlc.implicits._
 
   val rdd = sc.makeRDD(List(("we work sometimes"),
@@ -21,7 +21,7 @@ class WordToPhraseSpec extends FunSpec {
   val df = rdd.toDF("words")
   val dfMulti = rddMulti.toDF("words", "moreWords")
   val cmsParams = CMSParams(epsilon= 1E-3, delta = 1E-10, seed = 1)
-  val scoreParams = ScoreParams(delta = 1, threshold = 1)
+  val scoreParams = ScoreParams(delta = 1, threshold = 0.125)
   def token: Tokenize = _.split("\\W+")
 
   describe("Creating phrases from string combinations") {
@@ -75,7 +75,7 @@ class WordToPhraseSpec extends FunSpec {
                                 ("'You are a young man, Tyrion,' Mormont said. 'How many winters have you seen?'"),
                                 ("He could almost hear him, and their lord father as well. Winter is coming, and you are almost a man grown, Bran. You have a duty."),
                                 ("Promise me, Ned, his sister had whispered from her bed of blood. She had loved the scent of winter roses.")))
-      val scoreParams2 = ScoreParams(delta = 1, threshold = 2)
+      val scoreParams2 = ScoreParams(delta = 2, threshold = 0.05)
       val phrases = WordToPhrase(rdd, cmsParams, scoreParams2, token2, 2, StorageLevel.MEMORY_ONLY)
     }
 
@@ -92,7 +92,7 @@ class WordToPhraseSpec extends FunSpec {
                                 ("'You are a young man, Tyrion,' Mormont said. 'How many winters have you seen?'"),
                                 ("He could almost hear him, and their lord father as well. Winter is coming, and you are almost a man grown, Bran. You have a duty."),
                                 ("Promise me, Ned, his sister had whispered from her bed of blood. She had loved the scent of winter roses.")))
-      val scoreParams2 = ScoreParams(delta = 1, threshold = 2)
+      val scoreParams2 = ScoreParams(delta = 2, threshold = 0.05)
       val phrases = WordToPhrase(rdd.toDF("words"), "words", cmsParams, scoreParams2, token2, 2, StorageLevel.MEMORY_ONLY)
     }
   }

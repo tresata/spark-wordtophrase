@@ -13,7 +13,7 @@ import SparkSuite.{ sc, sqlc }
 
 // Define then CountMinSketch and scoring function parameters
 val cmsParams = CMSParams(epsilon= 1E-3, delta = 1E-10, seed = 1)
-val scoreParams = ScoreParams(delta = 1, threshold = 2)
+val scoreParams = ScoreParams(delta = 2, threshold = 0.05)
 
 // Definte how you want to tokenize the text
 def token: Tokenize = _.toLowerCase.replaceAll("'", "").replaceAll("\\W+", " ").trim.split("\\s+")
@@ -55,5 +55,5 @@ The printed output would look something like this:
 [promise me ned his sister had whispered from her bed of blood she had loved the scent of winter roses]
 ```
 
-Stay warm,
+Stay warm,<br />
 Team @Tresata
