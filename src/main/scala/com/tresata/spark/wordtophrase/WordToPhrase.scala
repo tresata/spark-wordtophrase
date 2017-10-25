@@ -35,7 +35,7 @@ object WordToPhrase {
   def countWordPhrases(token: Tokenize, params: CMSParams): RDD[String] => CMS[String] = { rdd =>
     val tokens = rdd.flatMap { s: String => token(s).toIterator ++ token(s).toIterator.sliding(2).map(_.mkString(" ")) }
     val cmsMonoid = new CMSMonoid[String](params.epsilon, params.delta, params.seed)
-    tokens.aggregate(cmsMonoid.zero)((cms, token) => cmsMonoid.plus(cms, cmsMonoid.create(token)), cmsMonoid.plus)
+    tokens.treeAggregate(cmsMonoid.zero)((cms, token) => cmsMonoid.plus(cms, cmsMonoid.create(token)), cmsMonoid.plus)
   }
 
   /* Score each phrase and join the high scoring one's */
