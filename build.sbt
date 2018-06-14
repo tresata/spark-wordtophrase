@@ -3,11 +3,10 @@ lazy val root = (project in file(".")).settings(
   name := "spark-wordtophrase",
   version := "0.2.0-SNAPSHOT",
   scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.10.6", "2.11.8"),
   libraryDependencies ++= Seq(
-    "com.twitter" %% "algebird-core" % "0.12.3" % "compile",
-    "org.apache.spark" %% "spark-sql" % "2.2.0" % "provided",
-    "org.scalatest" %% "scalatest" % "3.0.3" % "test"
+    "com.twitter" %% "algebird-core" % "0.12.4" % "compile",
+    "org.apache.spark" %% "spark-sql" % "2.3.1" % "provided",
+    "org.scalatest" %% "scalatest" % "3.0.5" % "test"
   ),
   publishMavenStyle := true,
   pomIncludeRepository := { x => false },
@@ -15,11 +14,12 @@ lazy val root = (project in file(".")).settings(
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
-      Some("snapshots" at nexus + "content/repositories/snapshots")
+      Some("snapshots" at "http://server02.tresata.com:8081/artifactory/oss-libs-snapshot-local")
     else
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
   },
   credentials += Credentials(Path.userHome / ".m2" / "credentials_sonatype"),
+  credentials += Credentials(Path.userHome / ".m2" / "credentials_artifactory"),
   pomExtra := (
     <url>https://github.com/tresata/spark-wordtophrase</url>
         <licenses>
