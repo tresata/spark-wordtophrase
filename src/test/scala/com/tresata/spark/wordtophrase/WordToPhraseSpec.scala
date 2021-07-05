@@ -1,10 +1,10 @@
 package com.tresata.spark.wordtophrase
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 import org.apache.spark.sql.Row
 import org.apache.spark.storage.StorageLevel
 
-class WordToPhraseSpec extends FunSpec {
+class WordToPhraseSpec extends AnyFunSpec {
   import WordToPhrase._
   import SparkSuite.{sc, sqlc}
   import sqlc.implicits._
